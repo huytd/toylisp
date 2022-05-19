@@ -1,5 +1,5 @@
 {
-    // Taken from https://github.com/devijvers/lisp.js/blob/master/lisp/test.ljs
+    // Taken from https://github.com/devijvers/lisp.js
     // with some simplification
 
     var line = 1;

@@ -1,7 +1,14 @@
 import { SyntaxError, parse } from './parser';
 import fs from 'fs';
+import { BaseNode, SeqNode } from './parser/types';
 
 const source = fs.readFileSync('./examples/test.el', 'utf-8');
-const tree = parse(source);
+const program: SeqNode[] = parse(source);
 
-console.log(JSON.stringify(tree, null, "\t"));
+const printNode = (node: BaseNode) => {
+
+};
+
+for (const node of program) {
+    console.log("DBG::NODE", node.value);
+}

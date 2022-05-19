@@ -5,7 +5,7 @@
     "author": "Huy <kingbazoka@gmail.com>",
     "license": "BSD-3-Clauses",
     "scripts": {
-        "generate-parser": "peggy --plugin ts-pegjs -o parser/index.ts parser/grammar.pgjs",
+        "generate-parser": "peggy --plugin ts-pegjs --extra-options-file parser/pegconfig.json -o parser/index.ts parser/grammar.pgjs",
         "start": "node -r esbuild-register main.ts"
     },
     "dependencies": {

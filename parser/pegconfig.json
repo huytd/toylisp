@@ -1,0 +1,13 @@
+{
+    "tspegjs": {
+        "customHeader": "import { SeqNode, VecNode, IntegerNode, StringNode, SymbolNode } from './types';"
+    },
+    "returnTypes": {
+        "start": "SeqNode",
+        "seq": "SeqNode",
+        "list": "SeqNode | VecNode",
+        "string": "StringNode",
+        "symbol": "SymbolNode",
+        "integer": "IntegerNode"
+    }
+}
