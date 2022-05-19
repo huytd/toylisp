@@ -1,4 +1,4 @@
-# ToyLISP
+# ToyLISP /:tôy lɪθp/ (a.k.a my LISP, not your)
 
 ToyLISP is a minimal programming language based on LISP. It's executed using a Stack-based Virtual Machine.
 
