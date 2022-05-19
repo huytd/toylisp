@@ -1,0 +1,47 @@
+{
+    // Taken from https://github.com/devijvers/lisp.js/blob/master/lisp/test.ljs
+    // with some simplification
+
+    var line = 1;
+    var prev_line_pos = 0;
+    var pos = 0;
+}
+
+start
+    = seq
+
+seq
+    = e:expr s:seq*
+      {
+          var result = [];
+          if (e.type != "WHITESPACE") result.push(e);
+          for (let i=0; i< s.length; i++) {
+              if (s[i].type != "WHITESPACE") result = result.concat(s[i]);
+          }
+          return result;
+      }
+
+
+list
+    = "(" s:seq ")" { return {type:"SEQ",value:s}; }
+    / "[" _* "]"    { return {type:"VEC",value:[],line:line}; }
+    / "[" s:seq "]" { return {type:"VEC",value:s,line:line}; }
+
+expr
+    = integer
+    / symbol
+    / string
+    / list
+    / _
+
+string
+    = '"' str:[^"\n]+ '"' { return {type:"STRING", value:str.join(""),pos:(pos-prev_line_pos-str.join("").length-1+1),line:line}; }
+
+symbol
+    = sym:[-+*/!@%^&=.a-zA-Z0-9_]+ { return {type:"SYMBOL", value:sym.join(""),pos:(pos-prev_line_pos-sym.join("").length+1),line:line}; }
+
+integer
+    = digits:[0-9]+ { return {type:"INTEGER", value:parseInt(digits.join("")) ,pos:(pos-prev_line_pos-digits.join("").length+1),line:line}; }
+
+_
+    = w:[ \t\n\r,;]+ { if (w.join("") == "\n") {line++; prev_line_pos = pos;} return {type:"WHITESPACE"}; }

@@ -1,0 +1,19 @@
+{
+    "name": "toylisp",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Huy <kingbazoka@gmail.com>",
+    "license": "BSD-3-Clauses",
+    "scripts": {
+        "generate-parser": "peggy --plugin ts-pegjs -o parser/index.ts parser/grammar.pgjs",
+        "start": "node -r esbuild-register main.ts"
+    },
+    "dependencies": {
+        "peggy": "^1.2.0",
+        "ts-pegjs": "^1.2.2"
+    },
+    "devDependencies": {
+        "esbuild": "^0.14.39",
+        "esbuild-register": "^3.3.2"
+    }
+}
