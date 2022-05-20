@@ -1,6 +1,6 @@
 import { parse } from './parser';
 import fs from 'fs';
-import { BaseNode, IntegerNode, SeqNode, StringNode } from './parser/types';
+import { IntegerNode, SeqNode, StringNode, SyntaxNode } from './parser/types';
 
 const ARITHMETIC = {
     '+': 'ADD',
@@ -10,7 +10,7 @@ const ARITHMETIC = {
     '/': 'DIV'
 };
 
-const SourcePrinter = (node: BaseNode) => {
+const SourcePrinter = (node: SyntaxNode) => {
     if (node.type === "SEQ") {
         return "(" + node.value.map(n => SourcePrinter(n)).join(" ") + ")";
     }
@@ -59,23 +59,22 @@ export class Compiler {
         this.program = program;
     }
 
-    compileNode(node: BaseNode, storing?: boolean) {
+    compileNode(node: SyntaxNode, storing?: boolean) {
         if (node.type === "SEQ") {
-            const currentNode: SeqNode = node as SeqNode;
-            const command = currentNode.value[0].value;
+            const command = node.value[0].value;
             switch (command) {
                 case 'let': {
-                    const store_name = this.compileNode(currentNode.value[1], true);
-                    const load_const = this.compileNode(currentNode.value[2]);
+                    const store_name = this.compileNode(node.value[1], true);
+                    const load_const = this.compileNode(node.value[2]);
                     return [ load_const, store_name];
                 }
                 case 'print': {
-                    const load_const = this.compileNode(currentNode.value[1]);
+                    const load_const = this.compileNode(node.value[1]);
                     return [ load_const, "PRINT" ];
                 }
                 case '+': case '-': case '*': case '/': case '%': {
-                    const load_const_a = this.compileNode(currentNode.value[1]);
-                    const load_const_b = this.compileNode(currentNode.value[2]);
+                    const load_const_a = this.compileNode(node.value[1]);
+                    const load_const_b = this.compileNode(node.value[2]);
                     const operator = ARITHMETIC[command];
                     return [load_const_a, load_const_b, operator];
                 }

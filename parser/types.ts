@@ -1,6 +1,6 @@
 export interface BaseNode {
     type: "INTEGER" | "SYMBOL" | "STRING" | "SEQ" | "VEC";
-    value: string | number | BaseNode[];
+    value: string | number | SyntaxNode[];
     line?: number;
     pos?: number;
 }
@@ -22,11 +22,12 @@ export interface StringNode extends BaseNode {
 
 export interface SeqNode extends BaseNode {
     type: "SEQ";
-    value: BaseNode[];
+    value: SyntaxNode[];
 }
-
 
 export interface VecNode extends BaseNode {
     type: "VEC";
-    value: BaseNode[];
+    value: SyntaxNode[];
 }
+
+export type SyntaxNode = IntegerNode | SymbolNode | StringNode | SeqNode | VecNode;
