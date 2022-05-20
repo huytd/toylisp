@@ -3,6 +3,8 @@
 Started working on compiling logic, at this point, the compiler is capable of generating
 the opcode for the `print`, `let` statement and some arithmetic operators.
 
+<img width="940" alt="image" src="https://user-images.githubusercontent.com/613943/169437324-4bfa4e37-bee0-42dd-9269-ddfa7dd719a3.png">
+
 Since I don't control the parsing flow (using generated code, thanks PeggyJS), I'm gonna
 handle the constant values (like numbers or strings) during the compilation process. The
 idea is, whenever we see a constant, we push it to the constant table and get the address
