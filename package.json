@@ -7,7 +7,8 @@
     "scripts": {
         "generate-parser": "peggy --plugin ts-pegjs --extra-options-file parser/pegconfig.json -o parser/index.ts parser/grammar.pgjs",
         "start": "node -r esbuild-register main.ts",
-        "test": "jest"
+        "test": "jest",
+        "dev": "jest --watchAll"
     },
     "dependencies": {
         "peggy": "^1.2.0",

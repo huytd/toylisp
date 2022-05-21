@@ -3,3 +3,6 @@ run:
 
 setup:
 	npm run generate-parser
+
+test:
+	npm run test

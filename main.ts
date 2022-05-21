@@ -85,12 +85,11 @@ export class Compiler {
             }
         }
         if (node.type === "SYMBOL") {
-            // TODO: Handle symbol name lookup
+            let symbol_id = this.symbols.read(node.value);
             if (storing) {
-                let symbol_id = this.symbols.read(node.value);
                 return "STORE_NAME " + symbol_id;
             } else {
-                return "LOAD_NAME " + node.value;
+                return "LOAD_NAME " + symbol_id;
             }
         }
         // if (node.type === "VEC") {
