@@ -102,3 +102,174 @@ describe('Compiler Test: "print" statement', () => {
         expect(constants.read(4)).toBe(2);
     });
 });
+
+describe('Compiler Test: arithmetic statement', () => {
+    test('ADD statement', () => {
+        const source = `(+ a b)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_NAME 1', 'LOAD_NAME 2', 'ADD']
+        ]);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+        expect(symbols.read("b")).toBe(2);
+    });
+
+    test('ADD statement with consts', () => {
+        const source = `(+ 5 10)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_CONST 1', 'LOAD_CONST 2', 'ADD']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(5)).toBe(1);
+        expect(constants.read(10)).toBe(2);
+    });
+
+    test('SUB statement', () => {
+        const source = `(- a b)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_NAME 1', 'LOAD_NAME 2', 'SUB']
+        ]);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+        expect(symbols.read("b")).toBe(2);
+    });
+
+    test('SUB statement with consts', () => {
+        const source = `(- 5 10)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_CONST 1', 'LOAD_CONST 2', 'SUB']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(5)).toBe(1);
+        expect(constants.read(10)).toBe(2);
+    });
+
+    test('MUL statement', () => {
+        const source = `(* a b)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_NAME 1', 'LOAD_NAME 2', 'MUL']
+        ]);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+        expect(symbols.read("b")).toBe(2);
+    });
+
+    test('MUL statement with consts', () => {
+        const source = `(* 5 10)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_CONST 1', 'LOAD_CONST 2', 'MUL']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(5)).toBe(1);
+        expect(constants.read(10)).toBe(2);
+    });
+
+    test('DIV statement', () => {
+        const source = `(/ a b)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_NAME 1', 'LOAD_NAME 2', 'DIV']
+        ]);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+        expect(symbols.read("b")).toBe(2);
+    });
+
+    test('DIV statement with consts', () => {
+        const source = `(/ 5 10)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_CONST 1', 'LOAD_CONST 2', 'DIV']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(5)).toBe(1);
+        expect(constants.read(10)).toBe(2);
+    });
+
+    test('MOD statement', () => {
+        const source = `(% a b)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_NAME 1', 'LOAD_NAME 2', 'MOD']
+        ]);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+        expect(symbols.read("b")).toBe(2);
+    });
+
+    test('MOD statement with consts', () => {
+        const source = `(% 5 10)`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_CONST 1', 'LOAD_CONST 2', 'MOD']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(5)).toBe(1);
+        expect(constants.read(10)).toBe(2);
+    });
+
+    test('Multiple expressions', () => {
+        const source = `(* (/ 4 2) (+ 5 a))`;
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            [['LOAD_CONST 1', 'LOAD_CONST 2', 'DIV'], ['LOAD_CONST 3', 'LOAD_NAME 1', 'ADD'], 'MUL']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(4)).toBe(1);
+        expect(constants.read(2)).toBe(2);
+        expect(constants.read(5)).toBe(3);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+    });
+});
