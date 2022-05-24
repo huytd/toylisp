@@ -38,7 +38,7 @@ string
     = '"' str:[^"\n]+ '"' { return {type:"STRING", value:str.join(""),pos:(pos-prev_line_pos-str.join("").length-1+1),line:line}; }
 
 symbol
-    = sym:[-+*/!@%^&=.a-zA-Z0-9_]+ { return {type:"SYMBOL", value:sym.join(""),pos:(pos-prev_line_pos-sym.join("").length+1),line:line}; }
+    = sym:[-+*/><!@%^&=.a-zA-Z0-9_]+ { return {type:"SYMBOL", value:sym.join(""),pos:(pos-prev_line_pos-sym.join("").length+1),line:line}; }
 
 integer
     = digits:[0-9]+ { return {type:"INTEGER", value:parseInt(digits.join("")) ,pos:(pos-prev_line_pos-digits.join("").length+1),line:line}; }

@@ -80,7 +80,9 @@ export class Compiler {
                 }
                 case '=': case '>': case '<': case '<=':
                     case '>=': case '!=': case 'eq': case 'neq': {
-                    // compare
+                    const load_const_a = this.compileNode(node.value[1]);
+                    const load_const_b = this.compileNode(node.value[2]);
+                    return [load_const_a, load_const_b, "CMP"];
                 }
             }
         }

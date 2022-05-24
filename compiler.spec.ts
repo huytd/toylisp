@@ -273,3 +273,41 @@ describe('Compiler Test: arithmetic statement', () => {
         expect(symbols.read("a")).toBe(1);
     });
 });
+
+describe('Compiler Test: Comparison operations', () => {
+    test('Simple comparison', () => {
+        const source = "(eq 5 a)";
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            ['LOAD_CONST 1', 'LOAD_NAME 1', 'CMP']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(5)).toBe(1);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+    });
+
+    test('Print comparison result', () => {
+        const source = "(print (>= a 100))";
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            [['LOAD_NAME 1', 'LOAD_CONST 1', 'CMP'], 'PRINT']
+        ]);
+
+        const constants = compiler.getConstants();
+        expect(constants.read(100)).toBe(1);
+
+        const symbols = compiler.getSymbols();
+        expect(symbols.read("a")).toBe(1);
+    });
+});
+
+// Next: Function declaration and If statement

@@ -235,8 +235,8 @@ function peg$parse(input: string, options?: IParseOptions) {
   const peg$c14 = /^[^"\n]/;
   const peg$c15 = peg$classExpectation(["\"", "\n"], true, false);
   const peg$c16 = function(str: any): any { return {type:"STRING", value:str.join(""),pos:(pos-prev_line_pos-str.join("").length-1+1),line:line}; };
-  const peg$c17 = /^[\-+*\/!@%\^&=.a-zA-Z0-9_]/;
-  const peg$c18 = peg$classExpectation(["-", "+", "*", "/", "!", "@", "%", "^", "&", "=", ".", ["a", "z"], ["A", "Z"], ["0", "9"], "_"], false, false);
+  const peg$c17 = /^[\-+*\/><!@%\^&=.a-zA-Z0-9_]/;
+  const peg$c18 = peg$classExpectation(["-", "+", "*", "/", ">", "<", "!", "@", "%", "^", "&", "=", ".", ["a", "z"], ["A", "Z"], ["0", "9"], "_"], false, false);
   const peg$c19 = function(sym: any): any { return {type:"SYMBOL", value:sym.join(""),pos:(pos-prev_line_pos-sym.join("").length+1),line:line}; };
   const peg$c20 = /^[0-9]/;
   const peg$c21 = peg$classExpectation([["0", "9"]], false, false);
