@@ -310,4 +310,43 @@ describe('Compiler Test: Comparison operations', () => {
     });
 });
 
-// Next: Function declaration and If statement
+describe('Compiler Test: If Statement', () => {
+    test('With then only', () => {
+        const source = "(if (eq 5 a) (print 1))";
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            [
+                ['LOAD_CONST 1', 'LOAD_NAME 1', 'CMP'],
+                'JMP_FALSE .lbl_1_else',
+                ['LOAD_CONST 2', 'PRINT'],
+                'JMP .lbl_1_end',
+                '.lbl_1_else:', [],
+                '.lbl_1_end:'
+            ]
+        ]);
+    });
+
+    test('With else', () => {
+        const source = "(if (eq 5 a) (print 1) (print 2))";
+        const program = parse(source);
+        const compiler = new Compiler(program);
+
+        const result = compiler.compile();
+        expect(result).toStrictEqual([
+            [
+                ['LOAD_CONST 1', 'LOAD_NAME 1', 'CMP'],
+                'JMP_FALSE .lbl_1_else',
+                ['LOAD_CONST 2', 'PRINT'],
+                'JMP .lbl_1_end',
+                '.lbl_1_else:',
+                ['LOAD_CONST 3', 'PRINT'],
+                '.lbl_1_end:'
+            ]
+        ]);
+    });
+});
+
+// Next: Function declaration 

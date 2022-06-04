@@ -1,3 +1,37 @@
+# 06.04.2022 - Compiling IF statement
+
+If statements and function are the tricky thing to me, now I have to add label support, a label is also a statement that has the form of:
+
+```
+.<label_name>
+```
+
+Ideally, the instruction list will be able to keep track of the label position, so it can jump to a label at any time.
+
+An If statement has the form of:
+
+```lisp
+(if (condition-statement)
+    (then-statement)
+    (else-statement))
+```
+
+My main goal is to use as less instructions as possible when compiling these statement. So, for each If statement, two new labels will be created to identify the else statement and the end of the if statement:
+
+```
+<condition-instructions>
+JMP_FALSE .label_1_else
+<then-instructions>
+JMP .label_1_end
+.label_1_else:
+<else-instructions>
+.label_1_end:
+```
+
+The `JMP_FALSE` instruction will make a jump if the result of the condition statement is falsy, otherwise, the execution will continue at the them instructions. When finished executing the then code, we need to make a jump to the end label, or the program will be continued at the else instructions.
+
+If the If statement have no else branch, we can still generate the label and leave the code for it empty, it make the compiling logic much shorter and easier to understand.
+
 # 05.20.2022 - Adding symbol table
 
 Not much for today, just adding some unit tests and implement a symbol table during the compilation process. The way it works is pretty much like the Constant Table that was mentioned yesterday.

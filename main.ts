@@ -54,6 +54,7 @@ export class Compiler {
     constants = new LookupTable();
     symbols = new LookupTable();
     program: SeqNode[];
+    labelCount = 0;
 
     constructor(program: SeqNode[]) {
         this.program = program;
@@ -84,6 +85,13 @@ export class Compiler {
                     const load_const_b = this.compileNode(node.value[2]);
                     return [load_const_a, load_const_b, "CMP"];
                 }
+                case 'if':
+                    this.labelCount++;
+                    const label = `.lbl_${this.labelCount}`;
+                    const condition_stmt = this.compileNode(node.value[1]);
+                    const then_stmt = this.compileNode(node.value[2]);
+                    const else_stmt = node.value[3] ? this.compileNode(node.value[3]) : [];
+                    return [condition_stmt, `JMP_FALSE ${label}_else`, then_stmt, 'JMP .lbl_1_end', `${label}_else:`, else_stmt, `${label}_end:`];
             }
         }
         if (node.type === "SYMBOL") {
